@@ -1,4 +1,4 @@
-package com.mygdx.gravitytoy;
+package com.mygdx.gravitytoy.vc;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
