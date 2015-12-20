@@ -12,7 +12,6 @@ public class Particle {
 	private static int IDs = 0 ;
 	private int id ;
 	private float mass ;
-	private float size ;
 	private Vector2 position ;
 	private Vector2 velocity ;
 	private Vector2 forces ;
@@ -24,7 +23,6 @@ public class Particle {
 	 */
 	public Particle(Vector2 position, float mass) {
 		this.mass = mass ;
-		this.size = (float)Math.log(mass) ;
 		this.position = position ;
 		this.velocity = new Vector2() ;
 		this.forces = new Vector2() ;
@@ -57,13 +55,14 @@ public class Particle {
 		forces.add(relative.scl(force)) ;
 	}
 	
+	public void addMass(float mass) {
+		this.mass += mass ;
+	}
+	
 	public float getMass() {
 		return mass ;
 	}
 	
-	public float getSize() {
-		return size ;
-	}
 	
 	public Vector2 getPosition() {
 		return position ;
