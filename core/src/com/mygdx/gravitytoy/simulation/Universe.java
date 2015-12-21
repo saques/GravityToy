@@ -125,21 +125,25 @@ public class Universe {
 		}
 		/**
 		 * This method returns a new Particle whose mass is
-		 * the sum of all masses in this cluster
-		 * @return
+		 * the sum of all masses in this cluster, assuming no
+		 * losses in energy
+		 * @return The equivalent particle
 		 */
 		public Particle equivalentParticle() {
 			float totalMass = 0 ;
 			float maxMass = 0 ;
 			Vector2 position = null;
+			Vector2 velocity = new Vector2();
 			for (Particle p: cluster) {
 				if (p.getMass() > maxMass) {
 					maxMass = p.getMass() ;
 					position = p.getPosition() ;
 				}
 				totalMass += p.getMass() ;
+				velocity.add(p.getVelocity().scl(p.getMass())) ;
 			}
-			return new Particle(position, totalMass) ;
+			velocity.scl(1/totalMass) ;
+			return new Particle(position, totalMass, velocity) ;
 		}
 		
 	}

@@ -17,18 +17,30 @@ public class Particle {
 	private Vector2 forces ;
 	
 	/**
-	 * Creates a particle with given initial position and mass
-	 * @param position The position of the cursor when clicked
-	 * @param mass The mass of the particle as setted by the user
+	 * Creates a Particle with given position, mass and
+	 * velocity vector
+	 * @param position
+	 * @param mass
+	 * @param velocity
 	 */
-	public Particle(Vector2 position, float mass) {
+	public Particle(Vector2 position, float mass, Vector2 velocity){
 		this.mass = mass ;
 		this.position = position ;
-		this.velocity = new Vector2() ;
+		this.velocity = velocity ;
 		this.forces = new Vector2() ;
 		this.id = IDs ;
 		IDs ++ ;
 	}
+	/**
+	 * Creates a Particle with given initial position and mass,
+	 * with velocity vector set as zero
+	 * @param position The position of the cursor when clicked
+	 * @param mass The mass of the particle as setted by the user
+	 */
+	public Particle(Vector2 position, float mass) {
+		this(position,mass,new Vector2()) ;
+	}
+	
 	/**
 	 * This method updates the internal status of a particle,
 	 * using the forces applied on it to change the velocity
@@ -56,14 +68,14 @@ public class Particle {
 		return force ;
 	}
 	
-	public void addMass(float mass) {
-		this.mass += mass ;
-	}
 	
 	public float getMass() {
 		return mass ;
 	}
 	
+	public Vector2 getVelocity() {
+		return velocity ;
+	}
 	
 	public Vector2 getPosition() {
 		return position ;
