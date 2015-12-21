@@ -1,13 +1,16 @@
 package com.mygdx.gravitytoy.simulation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gravitytoy.vc.ParticleInformation;
 
 public class Universe {
 	
@@ -18,7 +21,7 @@ public class Universe {
 		this.particles = new HashSet<Particle>() ;
 	}
 	
-	public Universe getInstance() {
+	public static Universe getInstance() {
 		return INSTANCE ;
 	}
 	
@@ -33,7 +36,7 @@ public class Universe {
 	protected void integrateForces() {
 		for (Particle p : particles) {
 			for (Particle s : particles) {
-				if (! p.equals(s)) {
+				if (!p.equals(s)) {
 					p.interact(s);
 				}
 			}
@@ -49,7 +52,6 @@ public class Universe {
 	 * This method evaluates all collisions among particles and builds a new
 	 * particles set with every particle Cluster replaced with an equivalent
 	 * mass
-	 * TODO: Verify efficiency
 	 */
 	protected void applyCollisions(){
 		Map <Particle,Set<Particle>> collisions = new HashMap<Particle, Set<Particle>>() ;
@@ -66,12 +68,14 @@ public class Universe {
 			}
 		}
 		HashSet<Particle> nparticles = new HashSet<Particle>() ;
-		for (Particle p : collisions.keySet()) {
+		for (Particle p : particles) {
 			if (collisions.containsKey(p)) {
 				if (collisions.get(p).isEmpty()) {
 					nparticles.add(p) ;
 				} else {
-					Cluster c = new Cluster(collisions.get(p)) ;
+					Set<Particle> tmp = new HashSet<Particle>(collisions.get(p)) ;
+					tmp.add(p) ;
+					Cluster c = new Cluster(tmp) ;
 					for (Map.Entry<Particle, Set<Particle>> e : collisions.entrySet() ) {
 						c.add(e.getValue());
 					}
@@ -81,6 +85,17 @@ public class Universe {
 			}
 		}
 		this.particles = nparticles ;
+	}
+	
+	public List<ParticleInformation> update(float delta) {
+		List<ParticleInformation> ans = new ArrayList<ParticleInformation>() ;
+		integrateForces();
+		applyForces(delta);
+		applyCollisions();
+		for (Particle p: particles) {
+			ans.add(new ParticleInformation(p)) ;
+		}
+		return ans ;
 	}
 	/**
 	 * This class adds the concept of a Cluster, i.e. a set

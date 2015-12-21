@@ -48,11 +48,12 @@ public class Particle {
 	 * both particles and their masses
 	 * @param o
 	 */
-	public void interact (Particle o) {
+	public float interact (Particle o) {
 		float distance = o.getPosition().dst(this.position) ;
 		Vector2 relative = new Vector2(o.getPosition()).sub(this.position).nor() ;
 		float force = (float)((this.getMass()*o.getMass())/Math.pow(distance, 2)) ;
 		forces.add(relative.scl(force)) ;
+		return force ;
 	}
 	
 	public void addMass(float mass) {
@@ -77,16 +78,7 @@ public class Particle {
 	}
 	
 	public boolean equals (Object o) {
-		if (this == o) {
-			return true ;
-		} else if (o == null) {
-			return false ;
-		} else if (! (o instanceof Particle)) {
-			return false ; 
-		} else if (! (this.getID() != ((Particle)o).getID())){
-			return false ;
-		}
-		return true ;
+		return (o instanceof Particle) && (((Particle)o).getID() == this.id)  ;
 	}
 	
 }

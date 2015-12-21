@@ -6,27 +6,27 @@ import com.mygdx.gravitytoy.simulation.Particle;
 public class ParticleInformation {
 	
 	private float mass ;
-	private float size ;
+	private float radius ;
 	private Vector2 position ;
 	
 	public ParticleInformation (Particle p) {
 		this.mass = p.getMass() ;
-		this.size = (float) Math.log(mass);
+		this.radius = (float) Math.log(mass);
 		this.position = p.getPosition() ;
 	}
 	
 	public ParticleInformation(float mass , Vector2 position) {
 		this.mass = mass ;
 		this.position = position ;
-		this.size = (float)Math.log(mass) ;
+		this.radius = (float)Math.log(mass) ;
 	}
 	
 	public float getMass() {
 		return mass ;
 	}
 	
-	public float getSize() {
-		return size ;
+	public float getRadius() {
+		return radius ;
 	}
 	
 	public Vector2 getPosition() {
