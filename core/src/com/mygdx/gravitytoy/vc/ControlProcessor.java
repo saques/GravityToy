@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 public class ControlProcessor implements InputProcessor {
 	
 	private boolean clicked ;
-	private Vector2 mouseClick ;
+	private Vector2 mousePosition ;
 	
 	protected ControlProcessor() {
-		this.mouseClick = new Vector2() ;
+		this.mousePosition = new Vector2() ;
 	}
 	
 	@Override
@@ -21,7 +21,7 @@ public class ControlProcessor implements InputProcessor {
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		mouseClick.set(screenX, screenY) ;
+		mousePosition.set(screenX,screenY);
 		clicked = true ;
 		return false;
 	}
@@ -30,7 +30,8 @@ public class ControlProcessor implements InputProcessor {
 		Vector2 ans = null ;
 		if (clicked) {
 			clicked = false ;
-			ans = new Vector2(mouseClick) ;
+			ans = new Vector2(mousePosition.x,
+					Gdx.graphics.getHeight()-mousePosition.y) ;
 		}
 		return ans ;
 	}
@@ -61,7 +62,6 @@ public class ControlProcessor implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
