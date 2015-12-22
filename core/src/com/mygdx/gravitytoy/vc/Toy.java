@@ -49,15 +49,13 @@ public class Toy extends ApplicationAdapter {
 			renderer.circle(pi.getPosition().x, pi.getPosition().y, pi.getRadius());
 		}
 	    renderer.end();
-	    System.out.println(toDraw.size());
-
 	}
 	
 	private List<ParticleInformation> update(){
 		List<ParticleInformation> ans = null ;
 		Vector2 mousePosition = input.getMouseClick() ;
 		if (mousePosition != null) {
-			universe.addParticle(new Particle(mousePosition,1000));
+			universe.addParticle(new Particle(mousePosition,100));
 		}
 		ans = universe.update(Gdx.graphics.getDeltaTime()) ;
 		return ans ;

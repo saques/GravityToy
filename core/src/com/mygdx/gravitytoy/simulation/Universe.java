@@ -72,6 +72,7 @@ public class Universe {
 			if (collisions.containsKey(p)) {
 				if (collisions.get(p).isEmpty()) {
 					nparticles.add(p) ;
+					collisions.remove(p) ;
 				} else {
 					Set<Particle> tmp = new HashSet<Particle>(collisions.get(p)) ;
 					tmp.add(p) ;
@@ -132,17 +133,18 @@ public class Universe {
 		public Particle equivalentParticle() {
 			float totalMass = 0 ;
 			float maxMass = 0 ;
-			Vector2 position = null;
+			Vector2 position = new Vector2();
 			Vector2 velocity = new Vector2();
 			for (Particle p: cluster) {
 				if (p.getMass() > maxMass) {
 					maxMass = p.getMass() ;
-					position = p.getPosition() ;
 				}
 				totalMass += p.getMass() ;
 				velocity.add(p.getVelocity().scl(p.getMass())) ;
+				position.add(p.getPosition().scl(p.getMass())) ;
 			}
 			velocity.scl(1/totalMass) ;
+			position.scl(1/totalMass) ;
 			return new Particle(position, totalMass, velocity) ;
 		}
 		
