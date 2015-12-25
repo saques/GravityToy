@@ -68,7 +68,6 @@ public class Particle {
 		return force ;
 	}
 	
-	
 	public float getMass() {
 		return mass ;
 	}
@@ -91,6 +90,10 @@ public class Particle {
 	
 	public boolean equals (Object o) {
 		return (o instanceof Particle) && (((Particle)o).getID() == this.id)  ;
+	}
+	
+	public String toString(){
+		return "Position: " + position.toString() + " Mass: " + mass ;
 	}
 	
 }

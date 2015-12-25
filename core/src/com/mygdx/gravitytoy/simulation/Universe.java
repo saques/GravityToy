@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gravitytoy.vc.ParticleInformation;
 
@@ -61,7 +60,7 @@ public class Universe {
 			for (Particle s : particles) {
 				if (! p.equals(s)) {
 					Circle s_c = new Circle(s.getPosition(), (float)Math.log(s.getMass())) ;
-					if (Intersector.overlaps(p_c, s_c)) {
+					if (p_c.overlaps(s_c)) {
 						collisions.get(p).add(s) ;
 					}
 				}
@@ -90,14 +89,15 @@ public class Universe {
 	
 	public List<ParticleInformation> update(float delta) {
 		List<ParticleInformation> ans = new ArrayList<ParticleInformation>() ;
+		applyCollisions();
 		integrateForces();
 		applyForces(delta);
-		applyCollisions();
 		for (Particle p: particles) {
 			ans.add(new ParticleInformation(p)) ;
 		}
 		return ans ;
 	}
+	
 	/**
 	 * This class adds the concept of a Cluster, i.e. a set
 	 * of particles that form a continuous structure
